@@ -339,10 +339,9 @@ void CI2C::ReadCallback(const CTWI::status_t status)
     g_rx_complete = true;
 }
 
-
-CI2C::status_t CI2C::WaitForComplete(void)
+I2C::status_t CI2C::WaitForComplete(void)
 {
-    unsigned long end = millis() + (unsigned long)m_timeout;
+    unsigned long endBase = millis();
 
     // Wait while transmission incomplete
     while (!g_rx_complete)
@@ -351,7 +350,7 @@ CI2C::status_t CI2C::WaitForComplete(void)
         if (m_timeout > 0)
         {
             // Check current time
-            if (millis() > end)
+            if ( millis() - endBasse  >= (unsigned long)m_timeout)
             {
                 return STATUS_TIMEOUT; // Timeout
             }
